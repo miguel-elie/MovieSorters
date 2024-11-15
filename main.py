@@ -22,8 +22,23 @@ for filepath in csv_list:
 
 count = 0
 
+#lists with movie ratings bundled in
+#for example: movies_1 is all movies with IMDb scores between 0 and 1
+#movies_2 is all movies with IMDb scores between 1 and 2
+movie_with_ratings = []
+movies_1 = []
+movies_2 = []
+movies_3 = []
+movies_4 = []
+movies_5 = []
+movies_6 = []
+movies_7 = []
+movies_8 = []
+movies_9 = []
+
 for entry in csv_dict_list:
-    if entry["rating"] != "":
-        count += 1
+    if entry["rating"] == "8.0":
+        count+=1
+
 
 print(count)
