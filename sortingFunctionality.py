@@ -1,3 +1,4 @@
+#COP3530 Module 6 Sorting Notes referenced when making the mergeSort and merge functions
 def mergeSort(ratings, left, right):
     if left < right:
         middle = left + (right-left) // 2
