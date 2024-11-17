@@ -14,7 +14,7 @@ def merge(ratings, left, middle, right):
     for i in range(n1):
         X[i] = ratings[left+i]
     for i in range(n2):
-        Y[i] =  ratings[middle+1+i]
+        Y[i] = ratings[middle+1+i]
     i=0
     j=0
     k=left
