@@ -21,6 +21,45 @@ class Movie:
         self.votes = votes
         self.gross = gross
 
+#COP3530 Module 6 Sorting Notes referenced when making the mergeSort and merge functions
+def mergeSort(ratings: list[Movie], left: float, right: float):
+    if left < right:
+        middle = left + (right-left) // 2
+        mergeSort(ratings, left, middle)
+        mergeSort(ratings, middle+1, right)
+        merge(ratings, left, middle, right)
+
+def merge(ratings: list[Movie], left: float, middle: float, right: float):
+    n1 = middle-left+1
+    n2 = right-middle
+    X = [0] * n1
+    Y = [0] * n2
+    for i in range(n1):
+        X[i] = ratings[left+i]
+    for i in range(n2):
+        Y[i] = ratings[middle+1+i]
+    i=0
+    j=0
+    k=left
+    while i < n1 and j < n2:
+        if float(X[i].votes) >= float(Y[j].votes):
+            ratings[k] = X[i]
+            i+=1
+            k+=1
+        else:
+            ratings[k] = Y[j]
+            j+=1
+            k+=1
+    while i < n1:
+        ratings[k] = X[i]
+        i+=1
+        k+=1
+    while j < n2:
+        ratings[k] = Y[j]
+        j+=1
+        k+=1
+
+
 
 
 #The dictionary read was made when talking to Coleton O'Donnell, writing part of it together.
@@ -78,6 +117,16 @@ for entry in movie_with_ratings:
                         movies_8to9.append(entry)
                     else:
                         movies_9to10.append(entry)
+
+mergeSort(movies_0to2, 0, len(movies_0to2)-1)
+mergeSort(movies_2to4, 0, len(movies_2to4)-1)
+mergeSort(movies_4to6, 0, len(movies_4to6)-1)
+mergeSort(movies_6to8, 0, len(movies_6to8)-1)
+mergeSort(movies_8to9, 0, len(movies_8to9)-1)
+mergeSort(movies_9to10, 0, len(movies_9to10)-1)
+
+for entry in movies_9to10:
+    print(f"{entry.movie_name} : {entry.votes}")
 
 
 
