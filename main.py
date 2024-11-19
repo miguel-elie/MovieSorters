@@ -59,9 +59,6 @@ def merge(ratings: list[Movie], left: float, middle: float, right: float):
         j+=1
         k+=1
 
-
-
-
 #The dictionary read was made when talking to Coleton O'Donnell, writing part of it together.
 
 # Specify the directory and pattern
@@ -92,6 +89,29 @@ for entry in csv_dict_list:
 
 #lists with movie ratings bundled in
 
+#method 1: map/dictionary with the key being the rating and the value being a list of objects with that rating
+
+movies_dict = {}
+ratings_dict = {}
+for entry in movie_with_ratings:
+    if entry.movie_name in movies_dict:
+        if entry.description not in movies_dict[entry.movie_name]:
+            movies_dict[entry.movie_name].append(entry)
+    else:
+        movies_dict[entry.movie_name] = [entry]
+
+for key, value in movies_dict.items():
+    for entry in value:
+        if entry.rating in ratings_dict:
+            ratings_dict[entry.rating].append(entry)
+        else:
+            ratings_dict[entry.rating] = [entry]
+for key, value in ratings_dict.items():
+    mergeSort(value, 0, len(value)-1)
+    print(f"{key}")
+
+'''
+#METHOD 2: separating by lists, merge sorting later
 movies_0to2= []
 movies_2to4 = []
 movies_4to6 = []
@@ -128,7 +148,7 @@ mergeSort(movies_9to10, 0, len(movies_9to10)-1)
 for entry in movies_9to10:
     print(f"{entry.movie_name} : {entry.votes}")
 
-
+'''
 
 
 #used geeksforgeeks.com/how-to-measure-elapsed-time-in-python as reference
