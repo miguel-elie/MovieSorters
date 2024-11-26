@@ -444,11 +444,13 @@ while notQuit:
     if inp == "quit" or inp == "Quit" or inp == "QUIT":
         notQuit = False
     if inp in final_movie_dict:
+        result = {}
         for key, value in ratings_dict.items():
             for entry in value:
                 if entry.genre == final_movie_dict[inp].genre:
-                    print(f"{entry.movie_name}, Rating: {entry.rating}, Votes: {entry.votes}")
-
+                    result[entry.movie_name] = entry
+        for key, value in result.items():
+            print(f"{key}, Rating: {value.rating}, Votes: {value.votes}")
 
 
 
