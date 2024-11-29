@@ -419,14 +419,14 @@ for key, value in ratings_dict.items():
     quick_sorted = value[:]
     quickSort(quick_sorted, 0, len(quick_sorted) - 1)
 '''
-# print("LOADING MOVIESORTER")
-# sortingTimeMerge = timeit.timeit(code_segment_merge, number=3)
-# sortingTimeMerge = sortingTimeMerge/3
-# print("LOADING MOVIESORTER")
-# sortingTimeQuick = timeit.timeit(code_segment_quick, number=3)
-# sortingTimeQuick = sortingTimeQuick/3
-# print(f"\nInitial Average Merge Sort Time: {sortingTimeMerge:.04f} seconds")
-# print(f"Initial Average Quick Sort Time: {sortingTimeQuick:.04f} seconds")
+print("LOADING MOVIESORTER")
+sortingTimeMerge = timeit.timeit(code_segment_merge, number=3)
+sortingTimeMerge = sortingTimeMerge/3
+print("LOADING MOVIESORTER")
+sortingTimeQuick = timeit.timeit(code_segment_quick, number=3)
+sortingTimeQuick = sortingTimeQuick/3
+print(f"\nAverage Merge Sort Time: {sortingTimeMerge:.04f} seconds")
+print(f"Average Quick Sort Time: {sortingTimeQuick:.04f} seconds")
 
 set_of_ratings = set({})
 for key, value in ratings_dict.items():
@@ -434,13 +434,13 @@ for key, value in ratings_dict.items():
 list_of_ratings = list(set_of_ratings)
 quickSortLIST(list_of_ratings, 0, len(list_of_ratings)-1)
 
-print("\n\n");
+print("\n");
 print("Welcome to Movie Sorter: Where you can find the highest rated films based on your genre preference")
-print("The available genres are: Action (A), Adventure (AD), Animation (AN), Biography (B), Crime (C), Family (FAM), Fantasy (FAN), Film-Noir (FN), History (HIS), Horror (HOR), Mystery (MYS), Romance (ROM), SciFi (SCI), Sports (SPO), Thriller (T), and War (W)")
+print("Please type your favorite movie (case-sensitive) or quit to quit")
 notQuit = True
 
 while notQuit:
-    inp = input("Enter the movie name or quit to stop\n")
+    inp = input("\nEnter the movie name or quit to stop\n")
     if inp == "quit" or inp == "Quit" or inp == "QUIT":
         notQuit = False
     if inp in final_movie_dict:
