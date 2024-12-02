@@ -523,14 +523,14 @@ def load_sorting():
     result_box.insert(tk.END, "LOADING MOVIESORTER...\n")
     root.update()
 
-    progress_bar["value"] = 10
+    progress_bar["value"] = 0
     root.update()
 
-    sortingTimeMerge = timeit.timeit(code_segment_merge, number=3) / 3
+    sortingTimeMerge = timeit.timeit(code_segment_merge, number=10) /10
     progress_bar["value"] = 50
     root.update()
 
-    sortingTimeQuick = timeit.timeit(code_segment_quick, number=3) / 3
+    sortingTimeQuick = timeit.timeit(code_segment_quick, number=10) /10
     progress_bar["value"] = 100
     root.update()
 
@@ -541,7 +541,7 @@ def load_sorting():
     )
     result_box.insert(
         tk.END,
-        "Welcome to Movie Sorter!\n\nEnter your favorite movie in the box below, and click 'Get Recommendations' to see the top 15 movies in the same genre.\n",
+        "Welcome to Movie Sorter!\n\nEnter your favorite movie (caps sensitive) in the box below, and click 'Get Recommendations' to see the top 15 movies in the same genre.\n",
     )
     result_box.config(state="disabled")
     root.update()
