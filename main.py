@@ -3,7 +3,9 @@ import os
 import csv
 import sortingFunctionality
 import timeit
-
+import tkinter as tk
+from tkinter import ttk, messagebox
+import timeit
 
 class Movie:
     def __init__(self, movie_id, movie_name, year, certificate, runtime, genre, rating, description, director, director_id, star, star_id, votes, gross):
@@ -419,38 +421,173 @@ for key, value in ratings_dict.items():
     quick_sorted = value[:]
     quickSort(quick_sorted, 0, len(quick_sorted) - 1)
 '''
-print("LOADING MOVIESORTER")
-sortingTimeMerge = timeit.timeit(code_segment_merge, number=3)
-sortingTimeMerge = sortingTimeMerge/3
-print("LOADING MOVIESORTER")
-sortingTimeQuick = timeit.timeit(code_segment_quick, number=3)
-sortingTimeQuick = sortingTimeQuick/3
-print(f"\nAverage Merge Sort Time: {sortingTimeMerge:.04f} seconds")
-print(f"Average Quick Sort Time: {sortingTimeQuick:.04f} seconds")
+# print("LOADING MOVIESORTER")
+# sortingTimeMerge = timeit.timeit(code_segment_merge, number=3)
+# sortingTimeMerge = sortingTimeMerge/3
+# print("LOADING MOVIESORTER")
+# sortingTimeQuick = timeit.timeit(code_segment_quick, number=3)
+# sortingTimeQuick = sortingTimeQuick/3
+# print(f"\nAverage Merge Sort Time: {sortingTimeMerge:.04f} seconds")
+# print(f"Average Quick Sort Time: {sortingTimeQuick:.04f} seconds")
+#
+# set_of_ratings = set({})
+# for key, value in ratings_dict.items():
+#     set_of_ratings.add(key)
+# list_of_ratings = list(set_of_ratings)
+# quickSortLIST(list_of_ratings, 0, len(list_of_ratings)-1)1
 
-set_of_ratings = set({})
-for key, value in ratings_dict.items():
-    set_of_ratings.add(key)
-list_of_ratings = list(set_of_ratings)
-quickSortLIST(list_of_ratings, 0, len(list_of_ratings)-1)
+# print("\n")
+# print("Welcome to Movie Sorter: Where you can find the highest-rated films based on your genre preference")
+# print("Please type your favorite movie (case-sensitive) or quit to quit")
+#
+# notQuit = True
+#
+# while notQuit:
+#     inp = input("\nEnter the movie name or quit to stop\n")
+#     if inp.lower() == "quit":
+#         notQuit = False
+#     elif inp in final_movie_dict:
+#         result = {}
+#         for key, value in ratings_dict.items():
+#             for entry in value:
+#                 if entry.genre == final_movie_dict[inp].genre:
+#                     result[entry.movie_name] = entry
+#
+#         # Sort results by votes in descending order
+#         sorted_movies = sorted(result.values(), key=lambda x: float(x.votes), reverse=True)
+#
+#         # Display only the top 15 movies
+#         print("\nTop 15 Movies in the same genre:")
+#         for i, movie in enumerate(sorted_movies[:15], start=1):
+#             print(f"{i}. {movie.movie_name}, Rating: {movie.rating}, Votes: {movie.votes}")
+#     else:
+#         print("Movie not found. Please try again.")
 
-print("\n");
-print("Welcome to Movie Sorter: Where you can find the highest rated films based on your genre preference")
-print("Please type your favorite movie (case-sensitive) or quit to quit")
-notQuit = True
+# Existing imports, Movie class, sorting functions, and dataset loading logic remain unchanged
 
-while notQuit:
-    inp = input("\nEnter the movie name or quit to stop\n")
-    if inp == "quit" or inp == "Quit" or inp == "QUIT":
-        notQuit = False
-    if inp in final_movie_dict:
+
+# Tkinter GUI setup
+root = tk.Tk()
+root.title("Movie Sorter")
+root.geometry("900x600")
+root.configure(bg="#1c1c1c")
+
+TITLE_FONT = ("Helvetica", 18, "bold")
+LABEL_FONT = ("Helvetica", 12)
+TEXTBOX_BG = "#2a2a2a"
+TEXTBOX_FG = "#ffffff"
+BUTTON_BG = "#ff4500"
+BUTTON_FG = "#ffffff"
+
+header_label = tk.Label(
+    root, text="MOVIESORTER", font=TITLE_FONT, bg="#1c1c1c", fg="#ffcc00"
+)
+header_label.pack(pady=10)
+
+progress_bar = ttk.Progressbar(root, orient="horizontal", length=400, mode="determinate")
+progress_bar.pack(pady=20)
+
+result_box = tk.Text(
+    root,
+    font=LABEL_FONT,
+    width=90,
+    height=20,
+    wrap=tk.WORD,
+    bg=TEXTBOX_BG,
+    fg=TEXTBOX_FG,
+    state="disabled",
+)
+result_box.pack_forget()
+
+input_frame = tk.Frame(root, bg="#1c1c1c")
+input_label = tk.Label(
+    input_frame, text="Enter your favorite movie:", font=LABEL_FONT, bg="#1c1c1c", fg="#ffffff"
+)
+input_label.grid(row=0, column=0, pady=10, padx=5, sticky="w")
+movie_input = tk.Entry(input_frame, font=("Arial", 14), width=30)
+movie_input.grid(row=0, column=1, pady=10, padx=5, sticky="w")
+submit_button = tk.Button(
+    input_frame,
+    text="Get Recommendations",
+    font=LABEL_FONT,
+    bg=BUTTON_BG,
+    fg=BUTTON_FG,
+    command=lambda: on_submit(),
+)
+submit_button.grid(row=0, column=2, pady=10, padx=10, sticky="w")
+input_frame.pack_forget()
+
+def load_sorting():
+    result_box.pack(pady=10)
+    result_box.config(state="normal")
+    result_box.insert(tk.END, "LOADING MOVIESORTER...\n")
+    root.update()
+
+    progress_bar["value"] = 10
+    root.update()
+
+    sortingTimeMerge = timeit.timeit(code_segment_merge, number=3) / 3
+    progress_bar["value"] = 50
+    root.update()
+
+    sortingTimeQuick = timeit.timeit(code_segment_quick, number=3) / 3
+    progress_bar["value"] = 100
+    root.update()
+
+    result_box.delete(1.0, tk.END)
+    result_box.insert(
+        tk.END,
+        f"Average Merge Sort Time: {sortingTimeMerge:.04f} seconds\nAverage Quick Sort Time: {sortingTimeQuick:.04f} seconds\n\n",
+    )
+    result_box.insert(
+        tk.END,
+        "Welcome to Movie Sorter!\n\nEnter your favorite movie in the box below, and click 'Get Recommendations' to see the top 15 movies in the same genre.\n",
+    )
+    result_box.config(state="disabled")
+    root.update()
+
+    input_frame.pack(pady=20)
+    result_box.pack(pady=10)
+    progress_bar.pack_forget()
+
+def on_submit():
+    movie_name = movie_input.get().strip()
+    if not movie_name:
+        messagebox.showerror("Error", "Please enter a movie name!")
+        return
+
+    if movie_name.lower() == "quit":
+        root.destroy()
+        return
+
+    if movie_name in final_movie_dict:
         result = {}
         for key, value in ratings_dict.items():
             for entry in value:
-                if entry.genre == final_movie_dict[inp].genre:
+                if entry.genre == final_movie_dict[movie_name].genre:
                     result[entry.movie_name] = entry
-        for key, value in result.items():
-            print(f"{key}, Rating: {value.rating}, Votes: {value.votes}")
+
+        sorted_movies = sorted(result.values(), key=lambda x: float(x.votes), reverse=True)
+
+        result_box.config(state="normal")
+        result_box.delete(1.0, tk.END)
+        result_box.insert(tk.END, f"Top 15 Movies in the same genre as '{movie_name}':\n\n")
+        for i, movie in enumerate(sorted_movies[:15], start=1):
+            result_box.insert(
+                tk.END,
+                f"{i}. {movie.movie_name} (Rating: {movie.rating}, Votes: {movie.votes})\n",
+            )
+        result_box.config(state="disabled")
+    else:
+        result_box.config(state="normal")
+        result_box.delete(1.0, tk.END)
+        result_box.insert(tk.END, f"Movie '{movie_name}' not found. Please try again.\n\n")
+        result_box.config(state="disabled")
+
+load_sorting()
+
+root.mainloop()
+()
 
 
 
