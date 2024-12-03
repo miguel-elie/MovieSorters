@@ -1,4 +1,4 @@
-To run the MovieSorters program, just import the code into your Python compiler and press run.
+To run the MovieSorters program, just clone the code into your Python compiler and press run.
 
 MOVIESORTERS
 By Miguel Elie and Nafiz Chawdhury
